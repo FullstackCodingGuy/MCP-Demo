@@ -1,71 +1,214 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RAG in Action: Real-World Applications</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"></head><body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RAG in Action: Real-World Applications</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 950px;
+      margin: 50px auto;
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 6px 32px rgba(60,72,88,0.13);
+      padding: 40px 32px 32px 32px;
+    }
+    h1 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 2.6rem;
+      margin-bottom: 12px;
+      color: #1a73e8;
+      letter-spacing: 1px;
+    }
+    .section {
+      display: flex;
+      align-items: flex-start;
+      gap: 28px;
+      margin-bottom: 36px;
+      padding: 24px 0;
+      border-bottom: 1px solid #eee;
+    }
+    .section:last-child {
+      border-bottom: none;
+    }
+    .icon-box {
+      min-width: 70px;
+      min-height: 70px;
+      background: linear-gradient(135deg, #e3f0ff 0%, #fdefff 100%);
+      border-radius: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #1a73e8;
+      box-shadow: 0 2px 12px rgba(50, 130, 240, 0.07);
+    }
+    .content {
+      flex: 1;
+    }
+    h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin: 0 0 8px 0;
+      color: #444;
+      display: flex;
+      align-items: center;
+    }
+    h2 .fa-solid {
+      margin-right: 12px;
+      font-size: 1.25em;
+      color: #1a73e8;
+    }
+    .sub-heading {
+      font-size: 1.09rem;
+      color: #888;
+      margin-bottom: 12px;
+      font-weight: 400;
+    }
+    .use-cases, .benefits {
+      padding: 0;
+      margin: 10px 0 0 0;
+      list-style: none;
+    }
+    .use-cases li::before {
+      content: "\f0da";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      color: #ff9800;
+      margin-right: 10px;
+      font-size: 1.1em;
+    }
+    .benefits li {
+      margin-bottom: 5px;
+    }
+    .benefits li::before {
+      content: "\f00c";
+      font-family: "Font Awesome 6 Free";
+      font-weight: 900;
+      color: #43a047;
+      margin-right: 10px;
+      font-size: 1.1em;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 18px 6px; }
+      .section { flex-direction: column; gap: 12px; }
+      .icon-box { margin-bottom: 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>RAG in Action: Real-World Applications</h1>
+    
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-heartbeat"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-heartbeat"></i> Healthcare</h2>
+        <div class="sub-heading">
+          RAG transforms medical decision-making by providing doctors with real-time access to the latest research, patient data, and treatment guidelines.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Clinical decision support systems</li>
+          <li>Drug interaction checking</li>
+          <li>Medical literature synthesis</li>
+          <li>Patient history analysis</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Improved diagnostic accuracy</li>
+          <li>Reduced medical errors</li>
+          <li>Faster treatment decisions</li>
+        </ul>
+      </div>
+    </div>
 
-# RAG in Action: Real-World Applications
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-chart-line"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-chart-line"></i> Finance</h2>
+        <div class="sub-heading">
+          Financial institutions use RAG for real-time market analysis, risk assessment, and personalized investment recommendations.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Market sentiment analysis</li>
+          <li>Risk assessment reports</li>
+          <li>Regulatory compliance checking</li>
+          <li>Investment portfolio optimization</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Real-time market insights</li>
+          <li>Enhanced risk management</li>
+          <li>Personalized recommendations</li>
+        </ul>
+      </div>
+    </div>
 
-## <i class="fas fa-heartbeat"></i> Healthcare
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-headset"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-headset"></i> Customer Support</h2>
+        <div class="sub-heading">
+          RAG-powered chatbots provide accurate, contextual support by accessing knowledge bases, FAQs, and customer history in real-time.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Intelligent chatbots</li>
+          <li>Technical troubleshooting</li>
+          <li>Product recommendations</li>
+          <li>Escalation management</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>24/7 availability</li>
+          <li>Consistent responses</li>
+          <li>Reduced response time</li>
+        </ul>
+      </div>
+    </div>
 
-RAG transforms medical decision-making by providing doctors with real-time access to the latest research, patient data, and treatment guidelines.
-
-### Use Cases:
-- Clinical decision support systems
-- Drug interaction checking
-- Medical literature synthesis
-- Patient history analysis
-
-### Benefits:
-- ✔️ Improved diagnostic accuracy
-- ✔️ Reduced medical errors
-- ✔️ Faster treatment decisions
-
----
-
-## <i class="fas fa-chart-line"></i> Finance
-
-Financial institutions use RAG for real-time market analysis, risk assessment, and personalized investment recommendations.
-
-### Use Cases:
-- Market sentiment analysis
-- Risk assessment reports
-- Regulatory compliance checking
-- Investment portfolio optimization
-
-### Benefits:
-- ✔️ Real-time market insights
-- ✔️ Enhanced risk management
-- ✔️ Personalized recommendations
-
----
-
-## <i class="fas fa-headset"></i> Customer Support
-
-RAG-powered chatbots provide accurate, contextual support by accessing knowledge bases, FAQs, and customer history in real-time.
-
-### Use Cases:
-- Intelligent chatbots
-- Technical troubleshooting
-- Product recommendations
-- Escalation management
-
-### Benefits:
-- ✔️ 24/7 availability
-- ✔️ Consistent responses
-- ✔️ Reduced response time
-
----
-
-## <i class="fas fa-graduation-cap"></i> Education
-
-Educational platforms leverage RAG to create personalized learning experiences and provide instant access to vast educational resources.
-
-### Use Cases:
-- Personalized tutoring systems
-- Research assistance
-- Adaptive learning platforms
-- Academic writing support
-
-### Benefits:
-- ✔️ Personalized learning paths
-- ✔️ Instant knowledge access
-- ✔️ Enhanced comprehension
-
-</body></html>
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-graduation-cap"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-graduation-cap"></i> Education</h2>
+        <div class="sub-heading">
+          Educational platforms leverage RAG to create personalized learning experiences and provide instant access to vast educational resources.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Personalized tutoring systems</li>
+          <li>Research assistance</li>
+          <li>Adaptive learning platforms</li>
+          <li>Academic writing support</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Personalized learning paths</li>
+          <li>Instant knowledge access</li>
+          <li>Enhanced comprehension</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
