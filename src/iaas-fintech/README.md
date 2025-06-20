@@ -172,14 +172,3 @@ Your product should be:
 * 🔄 **Continuously learning** (models improve over time)
 
 ---
-
-### Want to begin with a quick PoC?
-
-I can help you:
-
-* 📦 Build a notebook for churn prediction or spend clustering
-* 🧪 Package it with FastAPI and deploy locally with SQLite
-* 🖥️ Show a sample dashboard with Streamlit/Next.js
-* 🎯 Generate sample transaction data for training/testing
-
-Let me know your preferred first model or component, and I’ll generate a working base for you.

@@ -98,8 +98,8 @@ def main():
             "Overview", 
             "👥 Customer Management", 
             "🔧 Feature Engineering",
+            "🔮 Churn Prediction",
             "Customer Analytics", 
-            "Churn Prediction", 
             "Fraud Detection", 
             "Segmentation", 
             "Model Insights"
@@ -133,10 +133,19 @@ def main():
         except Exception as e:
             st.error(f"Error loading feature engineering page: {e}")
             st.info("Please ensure the feature data files are available")
+    elif page == "🔮 Churn Prediction":
+        # Import and run churn prediction documentation page
+        try:
+            import sys
+            import os
+            sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
+            from churn_prediction import main as churn_prediction_main
+            churn_prediction_main()
+        except Exception as e:
+            st.error(f"Error loading churn prediction page: {e}")
+            st.info("Please ensure the API server is running for interactive features")
     elif page == "Customer Analytics":
         show_customer_analytics(data)
-    elif page == "Churn Prediction":
-        show_churn_prediction(data)
     elif page == "Fraud Detection":
         show_fraud_detection()
     elif page == "Segmentation":
