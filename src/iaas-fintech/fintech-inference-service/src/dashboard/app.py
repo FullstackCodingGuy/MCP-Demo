@@ -94,7 +94,15 @@ def main():
     st.sidebar.title("Navigation")
     page = st.sidebar.selectbox(
         "Select Page",
-        ["Overview", "Customer Analytics", "Churn Prediction", "Fraud Detection", "Segmentation", "Model Insights"]
+        [
+            "Overview", 
+            "👥 Customer Management", 
+            "Customer Analytics", 
+            "Churn Prediction", 
+            "Fraud Detection", 
+            "Segmentation", 
+            "Model Insights"
+        ]
     )
     
     # Load data
@@ -102,6 +110,17 @@ def main():
     
     if page == "Overview":
         show_overview(data)
+    elif page == "👥 Customer Management":
+        # Import and run customer management page
+        try:
+            import sys
+            import os
+            sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
+            from customer_management import main as customer_main
+            customer_main()
+        except Exception as e:
+            st.error(f"Error loading customer management page: {e}")
+            st.info("Please ensure the API server is running on http://localhost:8000")
     elif page == "Customer Analytics":
         show_customer_analytics(data)
     elif page == "Churn Prediction":

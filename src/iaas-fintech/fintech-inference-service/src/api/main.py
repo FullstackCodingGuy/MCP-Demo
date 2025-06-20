@@ -19,7 +19,7 @@ from api.schemas.models import (
     SegmentPrediction, FraudPrediction, ErrorResponse,
     TransactionInput, CustomerInput, ModelExplanation
 )
-from api.routes import inference, health
+from api.routes import inference, health, customers
 from utils.config import settings
 
 # Configure logging
@@ -64,6 +64,7 @@ async def global_exception_handler(request, exc):
 # Include routers
 app.include_router(health.router, prefix="", tags=["Health"])
 app.include_router(inference.router, prefix=settings.api_prefix, tags=["Inference"])
+app.include_router(customers.router, prefix=settings.api_prefix, tags=["Customers & Transactions"])
 
 # Root endpoint
 @app.get("/")
