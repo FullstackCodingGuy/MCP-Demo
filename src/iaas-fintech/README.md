@@ -1,4 +1,13 @@
 
+### Model Statistics
+<img width="1320" alt="image" src="https://github.com/user-attachments/assets/ea21c66f-017b-4d5e-9949-15cfca92f974" />
+
+### Overview
+<img width="1235" alt="image" src="https://github.com/user-attachments/assets/7cbd8209-1cb5-49d1-ae8e-66e2ec89a497" />
+
+### Customer Analytics
+<img width="1219" alt="image" src="https://github.com/user-attachments/assets/8f729a59-df70-40ed-aced-0f1fde4e7cd1" />
+
 
 ## 🔑 CORE PRINCIPLES
 
