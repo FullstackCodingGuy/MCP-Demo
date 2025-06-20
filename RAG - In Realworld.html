@@ -7,109 +7,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
-    body {
-      font-family: 'Roboto', Arial, sans-serif;
-      background: #f5f7fa;
-      color: #222;
-      margin: 0;
-      padding: 0;
-    }
-    .container {
-      max-width: 950px;
-      margin: 50px auto;
-      background: #fff;
-      border-radius: 20px;
-      box-shadow: 0 6px 32px rgba(60,72,88,0.13);
-      padding: 40px 32px 32px 32px;
-    }
-    h1 {
-      text-align: center;
-      font-weight: 700;
-      font-size: 2.6rem;
-      margin-bottom: 12px;
-      color: #1a73e8;
-      letter-spacing: 1px;
-    }
-    .section {
-      display: flex;
-      align-items: flex-start;
-      gap: 28px;
-      margin-bottom: 36px;
-      padding: 24px 0;
-      border-bottom: 1px solid #eee;
-    }
-    .section:last-child {
-      border-bottom: none;
-    }
-    .icon-box {
-      min-width: 70px;
-      min-height: 70px;
-      background: linear-gradient(135deg, #e3f0ff 0%, #fdefff 100%);
-      border-radius: 15px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.2rem;
-      color: #1a73e8;
-      box-shadow: 0 2px 12px rgba(50, 130, 240, 0.07);
-    }
-    .content {
-      flex: 1;
-    }
-    h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin: 0 0 8px 0;
-      color: #444;
-      display: flex;
-      align-items: center;
-    }
-    h2 .fa-solid {
-      margin-right: 12px;
-      font-size: 1.25em;
-      color: #1a73e8;
-    }
-    .sub-heading {
-      font-size: 1.09rem;
-      color: #888;
-      margin-bottom: 12px;
-      font-weight: 400;
-    }
-    .use-cases, .benefits {
-      padding: 0;
-      margin: 10px 0 0 0;
-      list-style: none;
-    }
-    .use-cases li::before {
-      content: "\f0da";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      color: #ff9800;
-      margin-right: 10px;
-      font-size: 1.1em;
-    }
-    .benefits li {
-      margin-bottom: 5px;
-    }
-    .benefits li::before {
-      content: "\f00c";
-      font-family: "Font Awesome 6 Free";
-      font-weight: 900;
-      color: #43a047;
-      margin-right: 10px;
-      font-size: 1.1em;
-    }
-    @media (max-width: 700px) {
-      .container { padding: 18px 6px; }
-      .section { flex-direction: column; gap: 12px; }
-      .icon-box { margin-bottom: 8px; }
-    }
+    /* ... (keep your existing styles unchanged) ... */
   </style>
 </head>
 <body>
   <div class="container">
     <h1>RAG in Action: Real-World Applications</h1>
     
+    <!-- Healthcare Section -->
     <div class="section">
       <div class="icon-box">
         <i class="fa-solid fa-heartbeat"></i>
@@ -117,24 +22,32 @@
       <div class="content">
         <h2><i class="fa-solid fa-heartbeat"></i> Healthcare</h2>
         <div class="sub-heading">
-          RAG transforms medical decision-making by providing doctors with real-time access to the latest research, patient data, and treatment guidelines.
+          RAG transforms medical decision-making by providing clinicians with real-time access to the latest research, patient data, and treatment guidelines.
         </div>
         <strong>Use Cases:</strong>
         <ul class="use-cases">
-          <li>Clinical decision support systems</li>
-          <li>Drug interaction checking</li>
-          <li>Medical literature synthesis</li>
-          <li>Patient history analysis</li>
+          <li>Clinical decision support systems (e.g., AI assistants suggesting best treatment plans based on recent research and patient history)</li>
+          <li>Drug interaction checking (alerting doctors in real-time about possible adverse drug combinations)</li>
+          <li>Medical literature synthesis (summarizing thousands of research papers for oncologists)</li>
+          <li>Patient history analysis (aggregating and summarizing multi-year EHRs)</li>
+          <li>Radiology report generation (combining image analysis with relevant patient context)</li>
+          <li>Remote patient monitoring (alerting for anomalies using up-to-date protocols)</li>
         </ul>
         <strong>Benefits:</strong>
         <ul class="benefits">
           <li>Improved diagnostic accuracy</li>
           <li>Reduced medical errors</li>
           <li>Faster treatment decisions</li>
+          <li>Personalized patient care</li>
         </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          A hospital uses a RAG-powered assistant to generate discharge summaries by referencing the latest clinical guidelines and the patient’s full medical history, ensuring compliance and clarity.
+        </div>
       </div>
     </div>
 
+    <!-- Finance Section -->
     <div class="section">
       <div class="icon-box">
         <i class="fa-solid fa-chart-line"></i>
@@ -142,24 +55,32 @@
       <div class="content">
         <h2><i class="fa-solid fa-chart-line"></i> Finance</h2>
         <div class="sub-heading">
-          Financial institutions use RAG for real-time market analysis, risk assessment, and personalized investment recommendations.
+          Financial institutions use RAG for real-time market analysis, risk assessment, compliance, and tailored investment strategies.
         </div>
         <strong>Use Cases:</strong>
         <ul class="use-cases">
-          <li>Market sentiment analysis</li>
-          <li>Risk assessment reports</li>
-          <li>Regulatory compliance checking</li>
-          <li>Investment portfolio optimization</li>
+          <li>Market sentiment analysis (summarizing news, social media, and analyst reports)</li>
+          <li>Risk assessment reports (analyzing historical data and regulations)</li>
+          <li>Regulatory compliance checking (cross-referencing transactions with evolving global policies)</li>
+          <li>Investment portfolio optimization (personalized strategy suggestions for clients)</li>
+          <li>Fraud detection (combining transactional data with public fraud records)</li>
+          <li>Automated financial reporting (generating regulatory or client-facing reports)</li>
         </ul>
         <strong>Benefits:</strong>
         <ul class="benefits">
           <li>Real-time market insights</li>
           <li>Enhanced risk management</li>
           <li>Personalized recommendations</li>
+          <li>Automated compliance</li>
         </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          An investment advisory platform provides custom, real-time portfolio rebalancing suggestions by retrieving and analyzing the latest market events and the client’s historical preferences.
+        </div>
       </div>
     </div>
 
+    <!-- Customer Support Section -->
     <div class="section">
       <div class="icon-box">
         <i class="fa-solid fa-headset"></i>
@@ -167,24 +88,32 @@
       <div class="content">
         <h2><i class="fa-solid fa-headset"></i> Customer Support</h2>
         <div class="sub-heading">
-          RAG-powered chatbots provide accurate, contextual support by accessing knowledge bases, FAQs, and customer history in real-time.
+          RAG-powered chatbots and agents provide accurate, contextual support by accessing knowledge bases, customer histories, and product documentation in real-time.
         </div>
         <strong>Use Cases:</strong>
         <ul class="use-cases">
-          <li>Intelligent chatbots</li>
-          <li>Technical troubleshooting</li>
-          <li>Product recommendations</li>
-          <li>Escalation management</li>
+          <li>Intelligent chatbots (responding to complex queries with up-to-date information)</li>
+          <li>Technical troubleshooting (pulling step-by-step solutions from manuals)</li>
+          <li>Product recommendations (personalized based on purchase history)</li>
+          <li>Escalation management (summarizing customer intent for human agents)</li>
+          <li>Automated complaint resolution (retrieving warranty and policy details)</li>
+          <li>Onboarding assistance (guiding users with tailored instructions)</li>
         </ul>
         <strong>Benefits:</strong>
         <ul class="benefits">
           <li>24/7 availability</li>
           <li>Consistent responses</li>
           <li>Reduced response time</li>
+          <li>Higher customer satisfaction</li>
         </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          An e-commerce company uses a RAG-based virtual assistant to resolve 80% of tier-1 support tickets by instantly referencing the latest product guides and customer orders.
+        </div>
       </div>
     </div>
 
+    <!-- Education Section -->
     <div class="section">
       <div class="icon-box">
         <i class="fa-solid fa-graduation-cap"></i>
@@ -192,23 +121,179 @@
       <div class="content">
         <h2><i class="fa-solid fa-graduation-cap"></i> Education</h2>
         <div class="sub-heading">
-          Educational platforms leverage RAG to create personalized learning experiences and provide instant access to vast educational resources.
+          Educational platforms leverage RAG to create personalized learning experiences and provide instant access to extensive educational resources.
         </div>
         <strong>Use Cases:</strong>
         <ul class="use-cases">
-          <li>Personalized tutoring systems</li>
-          <li>Research assistance</li>
-          <li>Adaptive learning platforms</li>
-          <li>Academic writing support</li>
+          <li>Personalized tutoring systems (adaptive content delivery based on performance)</li>
+          <li>Research assistance (summarizing latest scientific findings for students)</li>
+          <li>Adaptive learning platforms (modifying quizzes and lessons in real-time)</li>
+          <li>Academic writing support (suggesting references and structuring essays)</li>
+          <li>Automated grading (retrieving grading rubrics and past feedback)</li>
+          <li>Multilingual support (translating and contextualizing content)</li>
         </ul>
         <strong>Benefits:</strong>
         <ul class="benefits">
           <li>Personalized learning paths</li>
           <li>Instant knowledge access</li>
           <li>Enhanced comprehension</li>
+          <li>Scalable education delivery</li>
         </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          An online course platform uses RAG to generate custom quizzes and provide instant explanations, pulling from a vast library of textbooks and open educational resources.
+        </div>
       </div>
     </div>
+
+    <!-- Legal Section -->
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-gavel"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-gavel"></i> Legal</h2>
+        <div class="sub-heading">
+          Law firms and legal teams use RAG for research, compliance, contract analysis, and document drafting.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Case law research (summarizing relevant precedents)</li>
+          <li>Contract review (highlighting key clauses and risks)</li>
+          <li>Legal document generation (drafting NDAs, agreements, and pleadings)</li>
+          <li>Compliance monitoring (cross-referencing evolving regulations)</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Time savings</li>
+          <li>Improved document quality</li>
+          <li>Reduced legal risk</li>
+        </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          A legal tech startup uses RAG to instantly identify and summarize new case law impacting ongoing litigation.
+        </div>
+      </div>
+    </div>
+
+    <!-- Manufacturing Section -->
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-industry"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-industry"></i> Manufacturing</h2>
+        <div class="sub-heading">
+          RAG supports industrial operations by providing real-time access to equipment manuals, maintenance logs, and supply chain data.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Predictive maintenance (analyzing sensor data and historical repairs)</li>
+          <li>Quality control (cross-referencing defect databases)</li>
+          <li>Supply chain optimization (retrieving latest logistics and inventory data)</li>
+          <li>Workforce training (delivering just-in-time instructions)</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Reduced downtime</li>
+          <li>Lower costs</li>
+          <li>Higher productivity</li>
+        </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          A factory floor technician uses a RAG-based app to diagnose and fix equipment issues by referencing live sensor data and updated repair manuals.
+        </div>
+      </div>
+    </div>
+
+    <!-- Retail & E-commerce Section -->
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-store"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-store"></i> Retail & E-commerce</h2>
+        <div class="sub-heading">
+          RAG enhances shopping experiences through smart recommendations, dynamic pricing, and real-time inventory checks.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Personalized product suggestions (analyzing trends and user preferences)</li>
+          <li>Dynamic pricing (adjusting prices based on demand and competition)</li>
+          <li>Inventory management (alerting on low stock and supply issues)</li>
+          <li>Customer query resolution (retrieving order and delivery information)</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Increased sales</li>
+          <li>Better customer retention</li>
+          <li>Efficient operations</li>
+        </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          An online retailer’s chatbot uses RAG to answer “Where is my order?” queries by pulling real-time shipment data and policy information.
+        </div>
+      </div>
+    </div>
+
+    <!-- Science & R&D Section -->
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-flask"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-flask"></i> Science & R&D</h2>
+        <div class="sub-heading">
+          Scientists use RAG to accelerate discovery by synthesizing research, patent, and dataset information.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Literature review automation</li>
+          <li>Grant proposal writing (integrating funding requirements and prior work)</li>
+          <li>Experimental protocol generation</li>
+          <li>Patent analysis</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Faster innovation</li>
+          <li>Comprehensive research coverage</li>
+        </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          A biotech team uses RAG to summarize the latest findings on mRNA vaccine delivery methods from thousands of publications.
+        </div>
+      </div>
+    </div>
+
+    <!-- Human Resources Section -->
+    <div class="section">
+      <div class="icon-box">
+        <i class="fa-solid fa-user-tie"></i>
+      </div>
+      <div class="content">
+        <h2><i class="fa-solid fa-user-tie"></i> Human Resources</h2>
+        <div class="sub-heading">
+          HR departments leverage RAG for recruitment, onboarding, and employee support.
+        </div>
+        <strong>Use Cases:</strong>
+        <ul class="use-cases">
+          <li>Resume screening (cross-referencing with job descriptions)</li>
+          <li>Interview scheduling (retrieving candidate and interviewer availability)</li>
+          <li>Policy Q&A (answering employee questions from updated handbooks)</li>
+          <li>Onboarding guides (customizing instructions for new hires)</li>
+        </ul>
+        <strong>Benefits:</strong>
+        <ul class="benefits">
+          <li>Faster hiring</li>
+          <li>Consistent employee support</li>
+        </ul>
+        <em>Example:</em>
+        <div class="sub-heading">
+          An HR chatbot uses RAG to answer employee benefits questions instantly by referencing the latest internal documentation.
+        </div>
+      </div>
+    </div>
+
   </div>
 </body>
 </html>
