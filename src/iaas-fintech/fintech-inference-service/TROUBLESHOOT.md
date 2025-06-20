@@ -35,3 +35,10 @@ setup.sh script doesn't have execute permissions. Let me fix that and then run t
 ```
 chmod +x /Users/dhamodharabalaji/Desktop/Workspace/Github/MCP-Demo/src/iaas-fintech/fintech-inference-service/setup.sh
 ```
+
+
+# Issue in setup
+
+
+brew install libomp
+

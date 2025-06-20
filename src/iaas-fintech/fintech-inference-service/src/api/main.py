@@ -14,12 +14,12 @@ import sys
 # Add src to path for imports
 sys.path.append(str(Path(__file__).parent.parent))
 
-from schemas.models import (
+from api.schemas.models import (
     HealthResponse, ChurnPrediction, ChurnBatchResponse,
     SegmentPrediction, FraudPrediction, ErrorResponse,
     TransactionInput, CustomerInput, ModelExplanation
 )
-from routes import inference, health
+from api.routes import inference, health
 from utils.config import settings
 
 # Configure logging

@@ -5,7 +5,13 @@ Customer churn prediction model
 import pandas as pd
 import numpy as np
 from typing import Tuple
-from xgboost import XGBClassifier
+try:
+    from xgboost import XGBClassifier
+    XGBOOST_AVAILABLE = True
+except ImportError:
+    from sklearn.ensemble import RandomForestClassifier as XGBClassifier
+    XGBOOST_AVAILABLE = False
+    print("XGBoost not available, falling back to RandomForestClassifier")
 from sklearn.preprocessing import LabelEncoder
 
 from .base_model import BaseModel

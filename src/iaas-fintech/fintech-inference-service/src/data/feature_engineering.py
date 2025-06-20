@@ -6,6 +6,7 @@ import pandas as pd
 import numpy as np
 from typing import Dict, List, Tuple
 from datetime import datetime, timedelta
+import os
 
 
 class FeatureEngineer:
@@ -368,9 +369,14 @@ class FeatureEngineer:
 
 def main():
     """Test feature engineering with sample data"""
+    # Change to project root directory for correct relative paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.join(script_dir, '..', '..')
+    os.chdir(project_root)
+    
     # Load sample data
     try:
-        df = pd.read_csv("../../data/raw/transactions.csv")
+        df = pd.read_csv("data/raw/transactions.csv")
         print(f"Loaded {len(df)} transactions")
         
         # Initialize feature engineer
@@ -378,12 +384,12 @@ def main():
         
         # Create customer features
         customer_features = feature_engineer.create_customer_features(df)
-        customer_features.to_csv("../../data/processed/customer_features.csv", index=False)
+        customer_features.to_csv("data/processed/customer_features.csv", index=False)
         print(f"Customer features saved: {customer_features.shape}")
         
         # Create transaction features
         transaction_features = feature_engineer.create_transaction_features(df)
-        transaction_features.to_csv("../../data/processed/transaction_features.csv", index=False)
+        transaction_features.to_csv("data/processed/transaction_features.csv", index=False)
         print(f"Transaction features saved: {transaction_features.shape}")
         
         print("\nFeature engineering completed successfully!")
