@@ -19,29 +19,356 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
+# Custom CSS for modern navigation
 st.markdown("""
 <style>
-    .metric-card {
-        background-color: #f0f2f6;
-        padding: 1rem;
-        border-radius: 0.5rem;
-        border-left: 5px solid #1f77b4;
+    /* Import modern fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+    
+    /* Hide default Streamlit elements */
+    .css-1d391kg {
+        padding-top: 0rem;
     }
+    
+    /* Sidebar container */
+    .css-1aumxhk {
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+        border-right: 3px solid #475569;
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Remove default styling */
+    .css-1v0mbdj > .css-1aumxhk > .css-1aumxhk {
+        background: transparent;
+    }
+    
+    /* Hide default selectbox */
+    .stSelectbox {
+        display: none !important;
+    }
+    
+    /* Modern brand header */
+    .brand-header {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        color: white;
+        padding: 1.8rem 1.2rem;
+        margin: -1rem -1rem 2rem -1rem;
+        text-align: center;
+        border-radius: 0 0 20px 20px;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .brand-header::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+        transform: rotate(30deg);
+        animation: shine 4s infinite;
+    }
+    
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(30deg); }
+        100% { transform: translateX(100%) translateY(100%) rotate(30deg); }
+    }
+    
+    .brand-title {
+        font-family: 'Inter', sans-serif;
+        font-size: 1.5rem;
+        font-weight: 800;
+        margin: 0;
+        position: relative;
+        z-index: 2;
+        text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    
+    .brand-subtitle {
+        font-family: 'Inter', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 400;
+        opacity: 0.95;
+        margin: 0.6rem 0 0 0;
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* Navigation sections */
+    .nav-section {
+        color: #94a3b8;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+        margin: 2.5rem 0 1.2rem 0;
+        padding: 0 0.8rem;
+        position: relative;
+    }
+    
+    .nav-section::after {
+        content: '';
+        position: absolute;
+        bottom: -0.6rem;
+        left: 0.8rem;
+        right: 0.8rem;
+        height: 2px;
+        background: linear-gradient(90deg, #475569 0%, transparent 100%);
+        border-radius: 1px;
+    }
+    
+    /* Navigation items */
+    .nav-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 1rem 1.2rem;
+        margin: 0.4rem 0;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: #e2e8f0;
+        text-decoration: none;
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        font-size: 0.95rem;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .nav-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+        transition: left 0.6s ease;
+    }
+    
+    .nav-item:hover::before {
+        left: 100%;
+    }
+    
+    .nav-item:hover {
+        background: rgba(59, 130, 246, 0.12);
+        border-color: rgba(59, 130, 246, 0.4);
+        color: #93c5fd;
+        transform: translateX(6px) scale(1.02);
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.25);
+    }
+    
+    .nav-item.active {
+        background: linear-gradient(135deg, rgba(59, 130, 246, 0.25) 0%, rgba(29, 78, 216, 0.25) 100%);
+        border-color: #3b82f6;
+        color: #93c5fd;
+        box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+        transform: translateX(4px);
+    }
+    
+    .nav-icon {
+        margin-right: 1rem;
+        font-size: 1.2rem;
+        width: 1.4rem;
+        text-align: center;
+        flex-shrink: 0;
+        opacity: 0.9;
+    }
+    
+    .nav-text {
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    /* Status panel */
+    .status-panel {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        padding: 1.5rem;
+        margin: 2.5rem 0;
+        color: #e2e8f0;
+        font-family: 'Inter', sans-serif;
+        backdrop-filter: blur(10px);
+    }
+    
+    .status-title {
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+        color: #cbd5e1;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .status-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0.8rem 0;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+    
+    .status-indicator {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: 0.5rem;
+        box-shadow: 0 0 6px currentColor;
+    }
+    
+    .status-online { 
+        background-color: #10b981; 
+        box-shadow: 0 0 8px #10b981;
+    }
+    .status-warning { 
+        background-color: #f59e0b; 
+        box-shadow: 0 0 8px #f59e0b;
+    }
+    .status-offline { 
+        background-color: #ef4444; 
+        box-shadow: 0 0 8px #ef4444;
+    }
+    
+    /* Enhanced metric cards */
+    .metric-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        padding: 1.8rem;
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        margin-bottom: 1.5rem;
+        transition: all 0.3s ease;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    .metric-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        border-color: rgba(59, 130, 246, 0.3);
+    }
+    
     .high-risk {
-        border-left-color: #d62728 !important;
+        border-left: 5px solid #dc2626;
     }
     .medium-risk {
-        border-left-color: #ff7f0e !important;
+        border-left: 5px solid #f59e0b;
     }
     .low-risk {
-        border-left-color: #2ca02c !important;
+        border-left: 5px solid #059669;
+    }
+    
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .nav-item {
+            padding: 0.9rem 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .nav-icon {
+            margin-right: 0.8rem;
+            font-size: 1.1rem;
+        }
+        
+        .brand-title {
+            font-size: 1.3rem;
+        }
+        
+        .brand-subtitle {
+            font-size: 0.8rem;
+        }
     }
 </style>
 """, unsafe_allow_html=True)
 
 # API Configuration
 API_BASE_URL = "http://localhost:8000"
+
+# Initialize session state for navigation
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = 'Overview'
+
+def render_modern_sidebar():
+    """Render modern sidebar navigation"""
+    with st.sidebar:
+        # Brand header
+        st.markdown("""
+        <div class="brand-header">
+            <div class="brand-title">🏦 FinTech AI</div>
+            <div class="brand-subtitle">Enterprise Intelligence Platform</div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        # Navigation structure
+        navigation_sections = {
+            "CORE ANALYTICS": [
+                {"name": "Overview", "icon": "📊", "key": "Overview"},
+                {"name": "Customer Analytics", "icon": "📈", "key": "Customer Analytics"},
+                {"name": "Customer Management", "icon": "👥", "key": "👥 Customer Management"}
+            ],
+            "AI & MACHINE LEARNING": [
+                {"name": "Churn Prediction", "icon": "🔮", "key": "🔮 Churn Prediction"},
+                {"name": "Fraud Detection", "icon": "🛡️", "key": "Fraud Detection"},
+                {"name": "Customer Segmentation", "icon": "🎯", "key": "Segmentation"},
+                {"name": "Model Insights", "icon": "🧠", "key": "Model Insights"}
+            ],
+            "TECHNICAL": [
+                {"name": "Feature Engineering", "icon": "🔧", "key": "🔧 Feature Engineering"},
+                {"name": "API Documentation", "icon": "🔌", "key": "🔌 API Documentation"}
+            ]
+        }
+        
+        # Render navigation sections
+        for section_title, items in navigation_sections.items():
+            st.markdown(f'<div class="nav-section">{section_title}</div>', unsafe_allow_html=True)
+            
+            for item in items:
+                is_active = st.session_state.current_page == item["key"]
+                active_class = "active" if is_active else ""
+                
+                # Create navigation button
+                if st.button(
+                    f"{item['icon']} {item['name']}", 
+                    key=f"nav_{item['key']}", 
+                    use_container_width=True,
+                    type="primary" if is_active else "secondary"
+                ):
+                    st.session_state.current_page = item["key"]
+                    st.rerun()
+        
+        # Status panel
+        st.markdown("""
+        <div class="status-panel">
+            <div class="status-title">System Status</div>
+            <div class="status-item">
+                <span>API Server</span>
+                <span class="status-indicator status-online"></span>
+            </div>
+            <div class="status-item">
+                <span>ML Models</span>
+                <span class="status-indicator status-online"></span>
+            </div>
+            <div class="status-item">
+                <span>Database</span>
+                <span class="status-indicator status-warning"></span>
+            </div>
+            <div class="status-item">
+                <span>Cache</span>
+                <span class="status-indicator status-online"></span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Utility functions
 @st.cache_data
@@ -85,27 +412,139 @@ def call_api(endpoint, data=None, method="GET"):
     except:
         return None
 
+# Placeholder functions
+def show_feature_engineering_placeholder():
+    """Show feature engineering placeholder page"""
+    st.header("🔧 Feature Engineering")
+    st.info("This page provides documentation and tools for feature engineering processes.")
+    
+    st.subheader("📋 Available Features")
+    
+    features_info = {
+        "Customer Features": [
+            "Days since last transaction",
+            "Average transaction amount",
+            "Total transactions count",
+            "Customer lifetime value"
+        ],
+        "Transaction Features": [
+            "Transaction frequency patterns",
+            "Spending volatility",
+            "Merchant diversity",
+            "Geographic distribution"
+        ],
+        "Behavioral Features": [
+            "Weekend transaction ratio",
+            "Night transaction ratio", 
+            "Payment method preferences",
+            "Session duration patterns"
+        ]
+    }
+    
+    col1, col2, col3 = st.columns(3)
+    
+    for i, (category, features) in enumerate(features_info.items()):
+        with [col1, col2, col3][i]:
+            st.markdown(f"**{category}**")
+            for feature in features:
+                st.markdown(f"• {feature}")
+
+def show_api_docs_placeholder():
+    """Show API documentation placeholder page"""
+    st.header("🔌 API Documentation")
+    st.info("Comprehensive documentation for the Fintech Inference Service API.")
+    
+    st.subheader("📖 Available Endpoints")
+    
+    endpoints = [
+        {
+            "method": "GET",
+            "endpoint": "/health",
+            "description": "Health check endpoint",
+            "response": "System status information"
+        },
+        {
+            "method": "POST", 
+            "endpoint": "/predict/churn",
+            "description": "Predict customer churn probability",
+            "response": "Churn probability score"
+        },
+        {
+            "method": "POST",
+            "endpoint": "/predict/fraud", 
+            "description": "Detect fraudulent transactions",
+            "response": "Fraud risk assessment"
+        },
+        {
+            "method": "GET",
+            "endpoint": "/customers/{id}",
+            "description": "Get customer information",
+            "response": "Customer profile data"
+        }
+    ]
+    
+    for endpoint in endpoints:
+        with st.expander(f"{endpoint['method']} {endpoint['endpoint']}"):
+            st.write(f"**Description:** {endpoint['description']}")
+            st.write(f"**Response:** {endpoint['response']}")
+            st.code(f"""
+# Example usage
+import requests
+
+response = requests.{endpoint['method'].lower()}(
+    "http://localhost:8000{endpoint['endpoint']}"
+)
+print(response.json())
+            """, language="python")
+
+def show_churn_prediction(data):
+    """Show churn prediction page with built-in functionality"""
+    st.header("🔮 Churn Prediction")
+    
+    # Churn risk summary
+    if 'churn_probability' in data.columns:
+        high_risk = (data['churn_probability'] > 0.6).sum()
+        medium_risk = ((data['churn_probability'] > 0.3) & (data['churn_probability'] <= 0.6)).sum()
+        low_risk = (data['churn_probability'] <= 0.3).sum()
+        
+        col1, col2, col3 = st.columns(3)
+        
+        with col1:
+            st.markdown(f"""
+            <div class="metric-card high-risk">
+                <h3>🔴 High Risk</h3>
+                <h2>{high_risk:,}</h2>
+                <p>Customers with >60% churn probability</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col2:
+            st.markdown(f"""
+            <div class="metric-card medium-risk">
+                <h3>🟡 Medium Risk</h3>
+                <h2>{medium_risk:,}</h2>
+                <p>Customers with 30-60% churn probability</p>
+            </div>
+            """, unsafe_allow_html=True)
+        
+        with col3:
+            st.markdown(f"""
+            <div class="metric-card low-risk">
+                <h3>🟢 Low Risk</h3>
+                <h2>{low_risk:,}</h2>
+                <p>Customers with <30% churn probability</p>
+            </div>
+            """, unsafe_allow_html=True)
+
 # Main dashboard
 def main():
     st.title("🏦 Fintech Inference Dashboard")
     st.markdown("AI-powered insights for banking and fintech applications")
     
     # Sidebar
-    st.sidebar.title("Navigation")
-    page = st.sidebar.selectbox(
-        "Select Page",
-        [
-            "Overview", 
-            "👥 Customer Management", 
-            "🔧 Feature Engineering",
-            "🔮 Churn Prediction",
-            "🔌 API Documentation",
-            "Customer Analytics", 
-            "Fraud Detection", 
-            "Segmentation", 
-            "Model Insights"
-        ]
-    )
+    render_modern_sidebar()
+    
+    page = st.session_state.current_page
     
     # Load data
     data = load_sample_data()
@@ -123,6 +562,8 @@ def main():
         except Exception as e:
             st.error(f"Error loading customer management page: {e}")
             st.info("Please ensure the API server is running on http://localhost:8000")
+            # Fallback to customer analytics
+            show_customer_analytics(data)
     elif page == "🔧 Feature Engineering":
         # Import and run feature engineering documentation page
         try:
@@ -134,6 +575,8 @@ def main():
         except Exception as e:
             st.error(f"Error loading feature engineering page: {e}")
             st.info("Please ensure the feature data files are available")
+            # Show placeholder content
+            show_feature_engineering_placeholder()
     elif page == "🔮 Churn Prediction":
         # Import and run churn prediction documentation page
         try:
@@ -145,6 +588,8 @@ def main():
         except Exception as e:
             st.error(f"Error loading churn prediction page: {e}")
             st.info("Please ensure the API server is running for interactive features")
+            # Fallback to built-in churn prediction
+            show_churn_prediction(data)
     elif page == "🔌 API Documentation":
         # Import and run API documentation page
         try:
@@ -156,6 +601,8 @@ def main():
         except Exception as e:
             st.error(f"Error loading API documentation page: {e}")
             st.info("Please ensure the API server is running for live endpoint testing")
+            # Show placeholder content
+            show_api_docs_placeholder()
     elif page == "Customer Analytics":
         show_customer_analytics(data)
     elif page == "Fraud Detection":
@@ -164,6 +611,9 @@ def main():
         show_segmentation(data)
     elif page == "Model Insights":
         show_model_insights()
+    else:
+        # Default to overview
+        show_overview(data)
 
 def show_overview(data):
     """Show overview dashboard"""
