@@ -291,11 +291,13 @@ def display_customers_list():
             st.rerun()
     
     with col3:
+        max_pages = max(1, pagination.get('total_pages', 1))
+        current_page = min(pagination.get('page', 1), max_pages)
         new_page = st.number_input(
             "Page", 
             min_value=1, 
-            max_value=pagination['total_pages'], 
-            value=pagination['page'],
+            max_value=max_pages, 
+            value=current_page,
             key="page_input"
         )
         if new_page != pagination['page']:

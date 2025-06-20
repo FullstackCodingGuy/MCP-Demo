@@ -119,3 +119,20 @@ curl -s -X POST "http://localhost:8000/api/v1/inference/churn-score" -H "Content
 ```
 cd /Users/dhamodharabalaji/Desktop/Workspace/Github/MCP-Demo/src/iaas-fintech/fintech-inference-service && python test_full_system.py
 ```
+
+
+## run the feature engineering to generate the features 
+```
+cd /Users/dhamodharabalaji/Desktop/Workspace/Github/MCP-Demo/src/iaas-fintech/fintech-inference-service && python src/data/feature_engineering.py
+```
+
+## check if the data files exist and run it properly:
+```
+cd /Users/dhamodharabalaji/Desktop/Workspace/Github/MCP-Demo/src/iaas-fintech/fintech-inference-service && ls data/raw/ && ls data/processed/
+```
+
+## test the feature engineering page by creating a quick test script to ensure all functionality is preserved:
+```
+cd /Users/dhamodharabalaji/Desktop/Workspace/Github/MCP-Demo/src/iaas-fintech/fintech-inference-service && python test_feature_engineering.py
+```
+

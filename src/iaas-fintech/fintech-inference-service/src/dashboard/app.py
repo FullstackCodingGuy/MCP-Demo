@@ -97,6 +97,7 @@ def main():
         [
             "Overview", 
             "👥 Customer Management", 
+            "🔧 Feature Engineering",
             "Customer Analytics", 
             "Churn Prediction", 
             "Fraud Detection", 
@@ -121,6 +122,17 @@ def main():
         except Exception as e:
             st.error(f"Error loading customer management page: {e}")
             st.info("Please ensure the API server is running on http://localhost:8000")
+    elif page == "🔧 Feature Engineering":
+        # Import and run feature engineering documentation page
+        try:
+            import sys
+            import os
+            sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
+            from feature_engineering import main as feature_engineering_main
+            feature_engineering_main()
+        except Exception as e:
+            st.error(f"Error loading feature engineering page: {e}")
+            st.info("Please ensure the feature data files are available")
     elif page == "Customer Analytics":
         show_customer_analytics(data)
     elif page == "Churn Prediction":
