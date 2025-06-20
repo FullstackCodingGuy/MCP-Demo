@@ -99,6 +99,7 @@ def main():
             "👥 Customer Management", 
             "🔧 Feature Engineering",
             "🔮 Churn Prediction",
+            "🔌 API Documentation",
             "Customer Analytics", 
             "Fraud Detection", 
             "Segmentation", 
@@ -144,6 +145,17 @@ def main():
         except Exception as e:
             st.error(f"Error loading churn prediction page: {e}")
             st.info("Please ensure the API server is running for interactive features")
+    elif page == "🔌 API Documentation":
+        # Import and run API documentation page
+        try:
+            import sys
+            import os
+            sys.path.append(os.path.join(os.path.dirname(__file__), 'pages'))
+            from api_documentation import main as api_docs_main
+            api_docs_main()
+        except Exception as e:
+            st.error(f"Error loading API documentation page: {e}")
+            st.info("Please ensure the API server is running for live endpoint testing")
     elif page == "Customer Analytics":
         show_customer_analytics(data)
     elif page == "Fraud Detection":
