@@ -54,6 +54,16 @@ python src/data/data_generator.py
 python src/models/train_all_models.py
 ```
 
+#### 3.1 Test the feature engineering script:
+```
+python src/data/feature_engineering.py
+```
+
+#### 3.2 Test Model training
+```
+python src/models/churn_model.py
+```
+
 ### 4. Start API Server
 ```bash
 uvicorn src.api.main:app --reload --host 0.0.0.0 --port 8000
