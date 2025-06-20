@@ -6,6 +6,7 @@ import json
 import random
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional
+import os
 
 import pandas as pd
 import numpy as np
@@ -265,13 +266,18 @@ class TransactionDataGenerator:
 
 def main():
     """Generate sample data for the fintech inference service"""
+    # Change to project root directory for correct relative paths
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    project_root = os.path.join(script_dir, '..', '..')
+    os.chdir(project_root)
+    
     generator = TransactionDataGenerator(random_state=42)
     
     # Generate dataset
     transactions_df, customers_df = generator.generate_dataset(
         num_customers=1000,
         num_months=6,
-        output_path="../../data/raw/transactions.csv"
+        output_path="data/raw/transactions.csv"
     )
     
     print("\nDataset Summary:")
