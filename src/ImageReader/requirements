@@ -1,3 +1,4 @@
 pytesseract
 pillow
-easyocr
+python-pptx
+numpy
