@@ -85,12 +85,30 @@ async def get_customers(
             
             # Add features if available
             if not customer_features_df.empty and 'total_transactions' in row:
+                # Helper function to safely convert to int, handling NaN values
+                def safe_int(value, default=0):
+                    try:
+                        if pd.isna(value) or value is None:
+                            return default
+                        return int(float(value))
+                    except (ValueError, TypeError):
+                        return default
+                
+                # Helper function to safely convert to float, handling NaN values
+                def safe_float(value, default=0.0):
+                    try:
+                        if pd.isna(value) or value is None:
+                            return default
+                        return float(value)
+                    except (ValueError, TypeError):
+                        return default
+                
                 customer.update({
-                    "total_transactions": int(row.get('total_transactions', 0)),
-                    "total_amount": float(row.get('total_amount', 0)),
-                    "avg_transaction_amount": float(row.get('avg_transaction_amount', 0)),
-                    "days_since_last_transaction": int(row.get('days_since_last_transaction', 0)),
-                    "churn_risk": "High" if row.get('days_since_last_transaction', 0) > 60 else "Low"
+                    "total_transactions": safe_int(row.get('total_transactions')),
+                    "total_amount": safe_float(row.get('total_amount')),
+                    "avg_transaction_amount": safe_float(row.get('avg_transaction_amount')),
+                    "days_since_last_transaction": safe_int(row.get('days_since_last_transaction')),
+                    "churn_risk": "High" if safe_int(row.get('days_since_last_transaction', 0)) > 60 else "Low"
                 })
             
             customers.append(customer)
