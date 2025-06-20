@@ -1324,7 +1324,7 @@ console.log(`Risk factors: ${fraudResult.risk_factors.join(', ')}`);
                 title="Average Response Time by Endpoint",
                 labels={'Avg_Response_Time_ms': 'Response Time (ms)'}
             )
-            fig.update_xaxis(tickangle=45)
+            fig.update_layout(xaxis={'tickangle': 45})
             st.plotly_chart(fig, use_container_width=True)
         
         with col2:
@@ -1335,7 +1335,7 @@ console.log(`Risk factors: ${fraudResult.risk_factors.join(', ')}`);
                 title="Throughput by Endpoint",
                 labels={'Throughput_req_s': 'Requests per Second'}
             )
-            fig.update_xaxis(tickangle=45)
+            fig.update_layout(xaxis={'tickangle': 45})
             st.plotly_chart(fig, use_container_width=True)
         
         # Memory usage chart
@@ -1346,7 +1346,7 @@ console.log(`Risk factors: ${fraudResult.risk_factors.join(', ')}`);
             title="Memory Usage by Endpoint",
             labels={'Memory_MB': 'Memory Usage (MB)'}
         )
-        fig.update_xaxis(tickangle=45)
+        fig.update_layout(xaxis={'tickangle': 45})
         st.plotly_chart(fig, use_container_width=True)
         
         # Optimization Strategies

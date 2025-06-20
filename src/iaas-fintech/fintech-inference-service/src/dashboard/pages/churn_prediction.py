@@ -837,7 +837,7 @@ def main():
             title="Feature Stability Scores",
             color_discrete_map={'Stable': 'green', 'Monitor': 'orange', 'Alert': 'red'}
         )
-        fig.update_xaxis(tickangle=45)
+        fig.update_layout(xaxis={'tickangle': 45})
         st.plotly_chart(fig, use_container_width=True)
     
     with tab6:
@@ -909,7 +909,7 @@ def main():
             text='Annual_Value_M'
         )
         fig.update_traces(texttemplate='$%{text}M', textposition='outside')
-        fig.update_xaxis(tickangle=45)
+        fig.update_layout(xaxis={'tickangle': 45})
         st.plotly_chart(fig, use_container_width=True)
         
         # Use cases and applications
