@@ -56,3 +56,5 @@ nunit-*.xml
 .venv
 
 __pycache__/
+
+node_modules/
