@@ -18,7 +18,7 @@ from navigation import (
     get_current_page,
     get_page_breadcrumb
 )
-from styles import get_navigation_css
+from styles import get_navigation_css, get_corporate_theme_css
 
 # Page configuration
 st.set_page_config(
@@ -30,6 +30,7 @@ st.set_page_config(
 
 # Apply navigation CSS
 st.markdown(get_navigation_css(), unsafe_allow_html=True)
+st.markdown(get_corporate_theme_css(), unsafe_allow_html=True)
 
 # API Configuration
 API_BASE_URL = "http://localhost:8000"
@@ -177,31 +178,13 @@ def show_churn_prediction(data):
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.markdown(f"""
-            <div class="metric-card high-risk">
-                <h3>🔴 High Risk</h3>
-                <h2>{high_risk:,}</h2>
-                <p>Customers with >60% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🔴 High Risk", f"{high_risk:,}", "Customers with >60% churn probability")
         
         with col2:
-            st.markdown(f"""
-            <div class="metric-card medium-risk">
-                <h3>🟡 Medium Risk</h3>
-                <h2>{medium_risk:,}</h2>
-                <p>Customers with 30-60% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🟡 Medium Risk", f"{medium_risk:,}", "Customers with 30-60% churn probability")
         
         with col3:
-            st.markdown(f"""
-            <div class="metric-card low-risk">
-                <h3>🟢 Low Risk</h3>
-                <h2>{low_risk:,}</h2>
-                <p>Customers with <30% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🟢 Low Risk", f"{low_risk:,}", "Customers with <30% churn probability")
 
 # Main dashboard
 def main():
@@ -456,31 +439,13 @@ def show_churn_prediction(data):
         col1, col2, col3 = st.columns(3)
         
         with col1:
-            st.markdown(f"""
-            <div class="metric-card high-risk">
-                <h3>🔴 High Risk</h3>
-                <h2>{high_risk:,}</h2>
-                <p>Customers with >60% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🔴 High Risk", f"{high_risk:,}", "Customers with >60% churn probability")
         
         with col2:
-            st.markdown(f"""
-            <div class="metric-card medium-risk">
-                <h3>🟡 Medium Risk</h3>
-                <h2>{medium_risk:,}</h2>
-                <p>Customers with 30-60% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🟡 Medium Risk", f"{medium_risk:,}", "Customers with 30-60% churn probability")
         
         with col3:
-            st.markdown(f"""
-            <div class="metric-card low-risk">
-                <h3>🟢 Low Risk</h3>
-                <h2>{low_risk:,}</h2>
-                <p>Customers with <30% churn probability</p>
-            </div>
-            """, unsafe_allow_html=True)
+            st.metric("🟢 Low Risk", f"{low_risk:,}", "Customers with <30% churn probability")
         
         # Churn probability distribution
         st.subheader("📈 Churn Risk Distribution")
@@ -612,31 +577,13 @@ def show_model_insights():
     col1, col2, col3 = st.columns(3)
     
     with col1:
-        st.markdown("""
-        **Churn Prediction Model**
-        - Accuracy: 87.3%
-        - Precision: 84.1%
-        - Recall: 89.2%
-        - F1-Score: 86.6%
-        """)
-    
+        st.metric("Churn Model Accuracy", "87.3%", "F1-Score: 86.6%")
+
     with col2:
-        st.markdown("""
-        **Fraud Detection Model**
-        - Accuracy: 92.1%
-        - Precision: 88.7%
-        - Recall: 94.3%
-        - F1-Score: 91.4%
-        """)
-    
+        st.metric("Fraud Model Accuracy", "92.1%", "F1-Score: 91.4%")
+
     with col3:
-        st.markdown("""
-        **Segmentation Model**
-        - Silhouette Score: 0.74
-        - Inertia: 1,234.5
-        - Clusters: 5
-        - Stability: 95.2%
-        """)
+        st.metric("Segmentation Score", "0.74", "Silhouette Score")
     
     # Feature importance
     st.subheader("🔍 Feature Importance")

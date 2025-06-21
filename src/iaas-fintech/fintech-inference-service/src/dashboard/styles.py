@@ -288,6 +288,153 @@ NAVIGATION_CSS = """
 </style>
 """
 
+CORPORATE_THEME_CSS = """
+<style>
+    /* --- Main Content & Typography --- */
+    .main .block-container {
+        padding-top: 2rem;
+        padding-bottom: 2rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    
+    body, .stApp {
+        background-color: #f8fafc; /* Light gray background */
+        color: #0f172a; /* Dark slate text */
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Inter', sans-serif;
+        color: #1e293b; /* Darker slate for headers */
+        font-weight: 700;
+    }
+
+    h1 {
+        font-size: 2.2rem;
+        border-bottom: 3px solid #3b82f6;
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        margin-top: 2.5rem;
+        margin-bottom: 1.2rem;
+    }
+
+    p, .stMarkdown {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: #334155;
+    }
+
+    /* --- Buttons & Inputs --- */
+    .stButton>button {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        border-radius: 8px;
+        padding: 0.6rem 1.2rem;
+        background-color: #3b82f6;
+        color: white;
+        border: 2px solid #3b82f6;
+        transition: all 0.3s ease;
+    }
+
+    .stButton>button:hover {
+        background-color: #2563eb;
+        border-color: #2563eb;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        transform: translateY(-2px);
+    }
+    
+    .stTextInput>div>div>input, .stTextArea>div>textarea {
+        font-family: 'Inter', sans-serif;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        padding: 0.8rem;
+        background-color: #ffffff;
+    }
+    
+    .stTextInput>div>div>input:focus, .stTextArea>div>textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    }
+
+    /* --- Cards & Containers --- */
+    .card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+        border: 1px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+    }
+    
+    /* --- Dataframes & Tables --- */
+    .stDataFrame {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+    }
+    
+    .stDataFrame thead th {
+        background-color: #eef2ff;
+        color: #1e293b;
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stDataFrame tbody tr:nth-child(even) {
+        background-color: #f8fafc;
+    }
+
+    /* --- Metric & KPI Styling --- */
+    .stMetric {
+        background-color: #ffffff;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+
+    .stMetric:hover {
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+    }
+
+    .stMetric > label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 600;
+        color: #475569; /* Slate 600 */
+    }
+
+    .stMetric > div[data-testid="stMetricValue"] {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        font-size: 2rem;
+        color: #1e293b; /* Slate 800 */
+    }
+
+    .stMetric > div[data-testid="stMetricDelta"] {
+        font-family: 'Inter', sans-serif;
+        font-weight: 500;
+        color: #475569;
+    }
+
+</style>
+"""
+
+
 def get_navigation_css():
     """Get the navigation CSS styles"""
     return NAVIGATION_CSS
+
+def get_corporate_theme_css():
+    """Get the corporate theme CSS styles"""
+    return CORPORATE_THEME_CSS
