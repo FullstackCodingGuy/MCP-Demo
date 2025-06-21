@@ -41,6 +41,11 @@ def setup_database_from_csvs(customers_csv_path, transactions_csv_path):
         customer_count = conn.execute("SELECT COUNT(*) FROM customers").fetchone()[0]
         transaction_count = conn.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
 
+        print(f"Number of records inserted into customers: {len(customers_df)}")
+        print(f"Number of records available in customers table: {customer_count}")
+        print(f"Number of records inserted into transactions: {len(transactions_df)}")
+        print(f"Number of records available in transactions table: {transaction_count}")
+
         if not (customer_count == len(customers_df) and transaction_count == len(transactions_df)):
             raise Exception("Data verification failed. Counts do not match.")
 
