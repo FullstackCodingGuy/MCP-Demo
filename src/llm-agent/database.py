@@ -4,43 +4,53 @@ import os
 
 DB_FILE = os.path.join(os.path.dirname(__file__), 'database.db')
 
-def create_database():
-    """Creates a DuckDB database from CSV files."""
+def setup_database_from_csvs(customers_csv_path, transactions_csv_path):
+    """Creates and sets up the DuckDB database from CSV files."""
+    if os.path.exists(DB_FILE):
+        os.remove(DB_FILE)
+
     conn = duckdb.connect(DB_FILE)
-    conn.execute("""
-    CREATE OR REPLACE TABLE customers (
-        customer_id VARCHAR PRIMARY KEY,
-        segment VARCHAR
-    );
-    """)
-    conn.execute("""
-    CREATE OR REPLACE TABLE transactions (
-        transaction_id VARCHAR PRIMARY KEY,
-        customer_id VARCHAR,
-        transaction_date TIMESTAMP,
-        amount DECIMAL(10, 2)
-    );
-    """)
-    customers_df = pd.read_csv(
-        os.path.join(os.path.dirname(__file__), '../iaas-fintech/fintech-inference-service/data/raw/customers.csv'),
-        dtype={'customer_id': str}
-    )
-    transactions_df = pd.read_csv(
-        os.path.join(os.path.dirname(__file__), '../iaas-fintech/fintech-inference-service/data/raw/transactions.csv'),
-        dtype={'customer_id': str, 'transaction_id': str},
-        parse_dates=['transaction_date']
-    )
 
-    customers_df = customers_df[['customer_id', 'segment']]
-    transactions_df = transactions_df[['transaction_id', 'customer_id', 'transaction_date', 'amount']]
+    try:
+        conn.execute("""
+        CREATE TABLE customers (
+            customer_id VARCHAR PRIMARY KEY,
+            segment VARCHAR
+        );
+        """)
+        conn.execute("""
+        CREATE TABLE transactions (
+            transaction_id VARCHAR PRIMARY KEY,
+            customer_id VARCHAR,
+            transaction_date TIMESTAMP,
+            amount DECIMAL(10, 2)
+        );
+        """)
 
-    conn.register('customers_df', customers_df)
-    conn.register('transactions_df', transactions_df)
+        customers_df = pd.read_csv(customers_csv_path, dtype={'customer_id': str})
+        transactions_df = pd.read_csv(transactions_csv_path, dtype={'customer_id': str, 'transaction_id': str}, parse_dates=['transaction_date'])
 
-    conn.execute('INSERT INTO customers SELECT * FROM customers_df')
-    conn.execute('INSERT INTO transactions SELECT * FROM transactions_df')
+        customers_df = customers_df[['customer_id', 'segment']]
+        transactions_df = transactions_df[['transaction_id', 'customer_id', 'transaction_date', 'amount']]
 
-    conn.close()
+        conn.register('customers_df', customers_df)
+        conn.register('transactions_df', transactions_df)
+        conn.execute('INSERT INTO customers SELECT * FROM customers_df')
+        conn.execute('INSERT INTO transactions SELECT * FROM transactions_df')
+
+        customer_count = conn.execute("SELECT COUNT(*) FROM customers").fetchone()[0]
+        transaction_count = conn.execute("SELECT COUNT(*) FROM transactions").fetchone()[0]
+
+        if not (customer_count == len(customers_df) and transaction_count == len(transactions_df)):
+            raise Exception("Data verification failed. Counts do not match.")
+
+        conn.execute("CREATE INDEX idx_cust_id ON customers(customer_id);")
+        conn.execute("CREATE INDEX idx_txn_cust_id ON transactions(customer_id);")
+
+        return customer_count, transaction_count
+
+    finally:
+        conn.close()
 
 def get_top_customers(month: str):
     """Gets the top 5 customers for a given month."""
