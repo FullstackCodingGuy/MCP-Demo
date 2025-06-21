@@ -1,13 +1,15 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { generateSampleData, formatCurrency, formatNumber, formatPercentage, getRiskColor, getSegmentColor, getChurnRiskLevel } from '@/lib/utils';
+import { formatCurrency, formatNumber, formatPercentage, getRiskColor, getSegmentColor, getChurnRiskLevel } from '@/lib/utils';
+import { apiClient } from '@/lib/api';
 import { Customer } from '@/types';
-import { Search, Filter, Download, Eye, Edit, Trash2, Plus } from 'lucide-react';
+import { Search, Filter, Download, Eye, Edit, Trash2, Plus, AlertTriangle } from 'lucide-react';
 
 export default function CustomerManagementPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSegment, setFilterSegment] = useState('all');
   const [filterRisk, setFilterRisk] = useState('all');
@@ -17,10 +19,43 @@ export default function CustomerManagementPage() {
   const [itemsPerPage] = useState(20);
 
   useEffect(() => {
-    const sampleData = generateSampleData(1000);
-    setCustomers(sampleData);
-    setLoading(false);
+    loadCustomers();
   }, []);
+
+  const loadCustomers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const customerData = await apiClient.getCustomers();
+      
+      // Ensure we always set an array, handle different API response formats
+      if (Array.isArray(customerData)) {
+        setCustomers(customerData);
+      } else if (customerData && typeof customerData === 'object') {
+        // Handle case where API returns { data: [...] } or { customers: [...] }
+        const data = customerData as any;
+        if (Array.isArray(data.data)) {
+          setCustomers(data.data);
+        } else if (Array.isArray(data.customers)) {
+          setCustomers(data.customers);
+        } else {
+          console.warn('Unexpected API response format:', customerData);
+          setCustomers([]);
+          setError('Received unexpected data format from API.');
+        }
+      } else {
+        console.warn('Unexpected API response format:', customerData);
+        setCustomers([]);
+        setError('Received unexpected data format from API.');
+      }
+    } catch (err) {
+      console.error('Error loading customers:', err);
+      setError('Failed to load customer data. Please try again.');
+      setCustomers([]); // Ensure customers is always an array
+    } finally {
+      setLoading(false);
+    }
+  };
 
   // Filter and search customers
   const filteredCustomers = customers.filter(customer => {
@@ -67,6 +102,24 @@ export default function CustomerManagementPage() {
     return (
       <div className="flex items-center justify-center h-64">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 space-y-4">
+        <div className="text-red-600 text-center">
+          <AlertTriangle className="w-12 h-12 mx-auto mb-2" />
+          <p className="text-lg font-semibold">Error Loading Customer Data</p>
+          <p className="text-sm text-gray-600">{error}</p>
+        </div>
+        <button
+          onClick={loadCustomers}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Retry
+        </button>
       </div>
     );
   }

@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { generateSampleData, formatCurrency, formatNumber, formatPercentage, getChurnRiskLevel } from '@/lib/utils';
+import { formatCurrency, formatNumber, formatPercentage, getChurnRiskLevel } from '@/lib/utils';
+import { apiClient } from '@/lib/api';
 import { Customer, ChurnPredictionRequest } from '@/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ScatterChart, Scatter } from 'recharts';
 import { Activity, TrendingUp, AlertTriangle, Brain, Play, RefreshCw } from 'lucide-react';
@@ -9,6 +10,7 @@ import { Activity, TrendingUp, AlertTriangle, Brain, Play, RefreshCw } from 'luc
 export default function ChurnPredictionPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [predicting, setPredicting] = useState(false);
   const [selectedCustomer, setSelectedCustomer] = useState<string>('');
   const [predictionResult, setPredictionResult] = useState<any>(null);
@@ -23,33 +25,77 @@ export default function ChurnPredictionPage() {
   });
 
   useEffect(() => {
-    const sampleData = generateSampleData(1000);
-    setCustomers(sampleData);
-    setLoading(false);
+    loadCustomers();
   }, []);
+
+  const loadCustomers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const customerData = await apiClient.getCustomers();
+      
+      // Ensure we always set an array, handle different API response formats
+      if (Array.isArray(customerData)) {
+        setCustomers(customerData);
+      } else if (customerData && typeof customerData === 'object') {
+        // Handle case where API returns { data: [...] } or { customers: [...] }
+        const data = customerData as any;
+        if (Array.isArray(data.data)) {
+          setCustomers(data.data);
+        } else if (Array.isArray(data.customers)) {
+          setCustomers(data.customers);
+        } else {
+          console.warn('Unexpected API response format:', customerData);
+          setCustomers([]);
+          setError('Received unexpected data format from API.');
+        }
+      } else {
+        console.warn('Unexpected API response format:', customerData);
+        setCustomers([]);
+        setError('Received unexpected data format from API.');
+      }
+    } catch (err) {
+      console.error('Error loading customers:', err);
+      setError('Failed to load customer data. Please try again.');
+      setCustomers([]); // Ensure customers is always an array
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handlePredictChurn = async (customer: Customer) => {
     setPredicting(true);
     
-    // Simulate API call delay
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Simulate prediction result (in real app, this would call the API)
-    const result = {
-      customer_id: customer.customer_id,
-      churn_probability: customer.churn_probability,
-      risk_category: getChurnRiskLevel(customer.churn_probability).level,
-      confidence: 0.85 + Math.random() * 0.1,
-      features_importance: {
-        'Days Since Last Transaction': customer.days_since_last_transaction > 30 ? 0.35 : 0.15,
-        'Transaction Frequency': customer.total_transactions < 10 ? 0.25 : 0.1,
-        'Average Amount': customer.avg_transaction_amount < 100 ? 0.2 : 0.05,
-        'Total Amount': customer.total_amount < -1000 ? 0.2 : 0.1
-      }
-    };
-    
-    setPredictionResult(result);
-    setPredicting(false);
+    try {
+      const churnRequest: ChurnPredictionRequest = {
+        customer_id: customer.customer_id,
+        days_since_last_transaction: customer.days_since_last_transaction,
+        total_transactions: customer.total_transactions,
+        avg_transaction_amount: customer.avg_transaction_amount,
+        total_amount: customer.total_amount
+      };
+      
+      const result = await apiClient.predictChurn(churnRequest);
+      setPredictionResult(result);
+    } catch (error) {
+      console.error('Error predicting churn:', error);
+      // Fallback to basic prediction if API fails
+      const result = {
+        customer_id: customer.customer_id,
+        churn_probability: customer.churn_probability,
+        risk_category: getChurnRiskLevel(customer.churn_probability).level,
+        confidence: 0.75,
+        features_importance: {
+          'Days Since Last Transaction': customer.days_since_last_transaction > 30 ? 0.35 : 0.15,
+          'Transaction Frequency': customer.total_transactions < 10 ? 0.25 : 0.1,
+          'Average Amount': customer.avg_transaction_amount < 100 ? 0.2 : 0.05,
+          'Total Amount': customer.total_amount < -1000 ? 0.2 : 0.1
+        }
+      };
+      setPredictionResult(result);
+    } finally {
+      setPredicting(false);
+    }
   };
 
   const handleManualPrediction = async () => {
@@ -57,34 +103,45 @@ export default function ChurnPredictionPage() {
     
     setPredicting(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    // Simple churn prediction logic (in real app, this would call ML API)
-    let churnProb = 0.1;
-    
-    if (manualPrediction.days_since_last_transaction > 60) churnProb += 0.3;
-    if (manualPrediction.total_transactions < 5) churnProb += 0.25;
-    if (manualPrediction.avg_transaction_amount < 50) churnProb += 0.2;
-    if (manualPrediction.total_amount < -2000) churnProb += 0.25;
-    
-    churnProb = Math.min(0.95, churnProb);
-    
-    const result = {
-      customer_id: manualPrediction.customer_id,
-      churn_probability: churnProb,
-      risk_category: getChurnRiskLevel(churnProb).level,
-      confidence: 0.82 + Math.random() * 0.15,
-      features_importance: {
-        'Days Since Last Transaction': manualPrediction.days_since_last_transaction > 30 ? 0.35 : 0.15,
-        'Transaction Frequency': manualPrediction.total_transactions < 10 ? 0.25 : 0.1,
-        'Average Amount': manualPrediction.avg_transaction_amount < 100 ? 0.2 : 0.05,
-        'Total Amount': manualPrediction.total_amount < -1000 ? 0.2 : 0.1
-      }
-    };
-    
-    setPredictionResult(result);
-    setPredicting(false);
+    try {
+      const churnRequest: ChurnPredictionRequest = {
+        customer_id: manualPrediction.customer_id,
+        days_since_last_transaction: manualPrediction.days_since_last_transaction,
+        total_transactions: manualPrediction.total_transactions,
+        avg_transaction_amount: manualPrediction.avg_transaction_amount,
+        total_amount: manualPrediction.total_amount
+      };
+      
+      const result = await apiClient.predictChurn(churnRequest);
+      setPredictionResult(result);
+    } catch (error) {
+      console.error('Error predicting churn:', error);
+      // Fallback prediction logic if API fails
+      let churnProb = 0.1;
+      
+      if (manualPrediction.days_since_last_transaction > 60) churnProb += 0.3;
+      if (manualPrediction.total_transactions < 5) churnProb += 0.25;
+      if (manualPrediction.avg_transaction_amount < 50) churnProb += 0.2;
+      if (manualPrediction.total_amount < -2000) churnProb += 0.25;
+      
+      churnProb = Math.min(0.95, churnProb);
+      
+      const result = {
+        customer_id: manualPrediction.customer_id,
+        churn_probability: churnProb,
+        risk_category: getChurnRiskLevel(churnProb).level,
+        confidence: 0.75,
+        features_importance: {
+          'Days Since Last Transaction': manualPrediction.days_since_last_transaction > 30 ? 0.35 : 0.15,
+          'Transaction Frequency': manualPrediction.total_transactions < 10 ? 0.25 : 0.1,
+          'Average Amount': manualPrediction.avg_transaction_amount < 100 ? 0.2 : 0.05,
+          'Total Amount': manualPrediction.total_amount < -1000 ? 0.2 : 0.1
+        }
+      };
+      setPredictionResult(result);
+    } finally {
+      setPredicting(false);
+    }
   };
 
   if (loading) {
@@ -95,9 +152,30 @@ export default function ChurnPredictionPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 space-y-4">
+        <div className="text-red-600 text-center">
+          <AlertTriangle className="w-12 h-12 mx-auto mb-2" />
+          <p className="text-lg font-semibold">Error Loading Customer Data</p>
+          <p className="text-sm text-gray-600">{error}</p>
+        </div>
+        <button
+          onClick={loadCustomers}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  // Ensure customers is always an array and has valid data
+  const validCustomers = Array.isArray(customers) ? customers : [];
+
   // Prepare chart data
-  const churnDistribution = customers.reduce((acc, customer) => {
-    const risk = getChurnRiskLevel(customer.churn_probability).level;
+  const churnDistribution = validCustomers.reduce((acc, customer) => {
+    const risk = getChurnRiskLevel(customer.churn_probability || 0).level;
     acc[risk] = (acc[risk] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
@@ -107,7 +185,7 @@ export default function ChurnPredictionPage() {
     value
   }));
 
-  const scatterData = customers.slice(0, 100).map(customer => ({
+  const scatterData = validCustomers.slice(0, 100).map(customer => ({
     x: customer.days_since_last_transaction,
     y: customer.churn_probability,
     z: customer.total_transactions
@@ -134,7 +212,7 @@ export default function ChurnPredictionPage() {
             <div>
               <p className="text-sm font-medium text-gray-600 mb-1">High Risk Customers</p>
               <p className="text-2xl font-bold text-red-600">
-                {formatNumber(customers.filter(c => c.churn_probability > 0.7).length)}
+                {formatNumber(validCustomers.filter(c => (c.churn_probability || 0) > 0.7).length)}
               </p>
             </div>
             <div className="p-3 rounded-lg bg-red-50">
@@ -148,7 +226,7 @@ export default function ChurnPredictionPage() {
             <div>
               <p className="text-sm font-medium text-gray-600 mb-1">Medium Risk</p>
               <p className="text-2xl font-bold text-yellow-600">
-                {formatNumber(customers.filter(c => c.churn_probability >= 0.4 && c.churn_probability <= 0.7).length)}
+                {formatNumber(validCustomers.filter(c => (c.churn_probability || 0) >= 0.4 && (c.churn_probability || 0) <= 0.7).length)}
               </p>
             </div>
             <div className="p-3 rounded-lg bg-yellow-50">
@@ -162,7 +240,7 @@ export default function ChurnPredictionPage() {
             <div>
               <p className="text-sm font-medium text-gray-600 mb-1">Low Risk</p>
               <p className="text-2xl font-bold text-green-600">
-                {formatNumber(customers.filter(c => c.churn_probability < 0.4).length)}
+                {formatNumber(validCustomers.filter(c => (c.churn_probability || 0) < 0.4).length)}
               </p>
             </div>
             <div className="p-3 rounded-lg bg-green-50">
@@ -201,7 +279,7 @@ export default function ChurnPredictionPage() {
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="">Choose a customer...</option>
-                {customers.slice(0, 50).map(customer => (
+                {validCustomers.slice(0, 50).map(customer => (
                   <option key={customer.customer_id} value={customer.customer_id}>
                     {customer.customer_id} - {customer.segment}
                   </option>
@@ -211,7 +289,7 @@ export default function ChurnPredictionPage() {
 
             <button
               onClick={() => {
-                const customer = customers.find(c => c.customer_id === selectedCustomer);
+                const customer = validCustomers.find(c => c.customer_id === selectedCustomer);
                 if (customer) handlePredictChurn(customer);
               }}
               disabled={!selectedCustomer || predicting}

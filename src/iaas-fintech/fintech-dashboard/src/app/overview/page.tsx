@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { generateSampleData, formatCurrency, formatNumber, formatPercentage, getRiskColor, getSegmentColor } from '@/lib/utils';
+import { formatCurrency, formatNumber, formatPercentage, getRiskColor, getSegmentColor } from '@/lib/utils';
+import { apiClient } from '@/lib/api';
 import { Customer } from '@/types';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 import { TrendingUp, TrendingDown, Users, DollarSign, AlertTriangle, Activity } from 'lucide-react';
@@ -20,13 +21,46 @@ interface MetricCard {
 export default function OverviewPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    // Generate sample data
-    const sampleData = generateSampleData(1000);
-    setCustomers(sampleData);
-    setLoading(false);
+    loadCustomers();
   }, []);
+
+  const loadCustomers = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const customerData = await apiClient.getCustomers();
+      
+      // Ensure we always set an array, handle different API response formats
+      if (Array.isArray(customerData)) {
+        setCustomers(customerData);
+      } else if (customerData && typeof customerData === 'object') {
+        // Handle case where API returns { data: [...] } or { customers: [...] }
+        const data = customerData as any;
+        if (Array.isArray(data.data)) {
+          setCustomers(data.data);
+        } else if (Array.isArray(data.customers)) {
+          setCustomers(data.customers);
+        } else {
+          console.warn('Unexpected API response format:', customerData);
+          setCustomers([]);
+          setError('Received unexpected data format from API.');
+        }
+      } else {
+        console.warn('Unexpected API response format:', customerData);
+        setCustomers([]);
+        setError('Received unexpected data format from API.');
+      }
+    } catch (err) {
+      console.error('Error loading customers:', err);
+      setError('Failed to load customer data. Please try again.');
+      setCustomers([]); // Ensure customers is always an array
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -36,11 +70,34 @@ export default function OverviewPage() {
     );
   }
 
+  if (error) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 space-y-4">
+        <div className="text-red-600 text-center">
+          <AlertTriangle className="w-12 h-12 mx-auto mb-2" />
+          <p className="text-lg font-semibold">Error Loading Data</p>
+          <p className="text-sm text-gray-600">{error}</p>
+        </div>
+        <button
+          onClick={loadCustomers}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  // Ensure customers is always an array and has valid data
+  const validCustomers = Array.isArray(customers) ? customers : [];
+  
   // Calculate metrics
-  const totalCustomers = customers.length;
-  const totalRevenue = customers.reduce((sum, c) => sum + c.total_amount, 0);
-  const averageChurnProbability = customers.reduce((sum, c) => sum + c.churn_probability, 0) / customers.length;
-  const highRiskCustomers = customers.filter(c => c.churn_probability > 0.7).length;
+  const totalCustomers = validCustomers.length;
+  const totalRevenue = validCustomers.reduce((sum, c) => sum + (c.total_amount || 0), 0);
+  const averageChurnProbability = validCustomers.length > 0 
+    ? validCustomers.reduce((sum, c) => sum + (c.churn_probability || 0), 0) / validCustomers.length 
+    : 0;
+  const highRiskCustomers = validCustomers.filter(c => (c.churn_probability || 0) > 0.7).length;
 
   const metrics: MetricCard[] = [
     {
@@ -78,19 +135,21 @@ export default function OverviewPage() {
   ];
 
   // Prepare chart data
-  const segmentData = customers.reduce((acc, customer) => {
-    acc[customer.segment] = (acc[customer.segment] || 0) + 1;
+  const segmentData = validCustomers.reduce((acc, customer) => {
+    const segment = customer.segment || 'Unknown';
+    acc[segment] = (acc[segment] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
   const segmentChartData = Object.entries(segmentData).map(([name, value]) => ({
     name,
     value,
-    percentage: (value / totalCustomers * 100).toFixed(1)
+    percentage: totalCustomers > 0 ? (value / totalCustomers * 100).toFixed(1) : '0'
   }));
 
-  const riskData = customers.reduce((acc, customer) => {
-    acc[customer.risk_level] = (acc[customer.risk_level] || 0) + 1;
+  const riskData = validCustomers.reduce((acc, customer) => {
+    const riskLevel = customer.risk_level || 'Unknown';
+    acc[riskLevel] = (acc[riskLevel] || 0) + 1;
     return acc;
   }, {} as Record<string, number>);
 
