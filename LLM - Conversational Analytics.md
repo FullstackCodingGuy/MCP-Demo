@@ -196,13 +196,104 @@ This plan guides you through building a conversational analytics layer using LLM
 
 ---
 
-## Next Steps
 
-1. Draft UI wireframes and static example queries.
-2. Set up backend API with LLM integration.
-3. Build MVP for end-to-end flow.
-4. Iterate, test, and document.
+
+Awesome. Here's how we'll proceed with building the **side-by-side working demo** for `get_top_customers()` using **LangChain**, **LangGraph**, and **CrewAI**:
 
 ---
 
-**Need help with code samples, prompt templates, or UI wireframes? Let me know!**
+## 🚧 Project Plan
+
+### ✅ Use Case
+
+> **"Who are the top 5 customers last month?"** — answered by the LLM agent calling a tool that queries a SQLite database.
+
+---
+
+## 🔧 Project Setup
+
+**Directory Layout:**
+
+```
+llm-analytics-demo/
+├── data/
+│   └── analytics.db            # SQLite DB with sample transactions
+├── tools/
+│   └── customer_tools.py       # get_top_customers() tool
+├── agents/
+│   ├── langchain_agent.py      # LangChain function-calling agent
+│   ├── langgraph_agent.py      # LangGraph DAG agent
+│   └── crewai_agent.py         # CrewAI team agent
+├── ui/
+│   └── app.py                  # Streamlit UI (optional CLI version too)
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🧠 Agent Behavior
+
+### 1. **LangChain Agent**
+
+* Single tool-using agent (MCP style)
+* Uses `get_top_customers()` as a structured tool
+* Runs on prompt: `"Show me top 5 customers last month"`
+
+### 2. **LangGraph Agent**
+
+* A mini DAG:
+
+  * `user_input` → `tool_runner` → `response_builder`
+* Executes `get_top_customers()` and routes to LLM for formatting
+
+### 3. **CrewAI Agent**
+
+* Team of:
+
+  * 📊 Analyst Agent: runs the function
+  * 📄 Reporter Agent: formats into report
+* Orchestrated via planner/leader
+
+---
+
+## 🎛️ Interface
+
+### CLI
+
+```bash
+$ python app.py --agent langchain
+$ python app.py --agent langgraph
+$ python app.py --agent crewai
+```
+
+### Streamlit
+
+```bash
+$ streamlit run ui/app.py
+```
+
+Dropdown to select agent and ask questions.
+
+---
+
+## 📦 Deliverables
+
+* ✅ SQLite DB generator with sample customers & transactions
+* ✅ LangChain MCP agent
+* ✅ LangGraph agent (state-based)
+* ✅ CrewAI agent (collaborative planner + executor)
+* ✅ Unified CLI + Streamlit interface
+* ✅ Markdown/table/text output of top customers
+
+---
+
+### ⏭️ Next Steps
+
+I'll now begin building the project. Please confirm:
+
+1. ✅ Do you want to use **Mistral via Ollama** for all agents? (Default)
+2. 🗂️ Should I include any additional tools (e.g., `get_transaction_summary()` or just `get_top_customers()` for now)?
+3. 🎨 Do you want a **clean UI with Streamlit only**, or also keep a CLI interface?
+
+Once confirmed, I’ll start generating the full solution and send you the full ZIP + GitHub-ready code.
