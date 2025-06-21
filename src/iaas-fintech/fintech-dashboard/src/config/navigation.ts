@@ -30,6 +30,13 @@ export const NAVIGATION_CONFIG: NavigationSection[] = [
         href: "/customer-analytics"
       },
       {
+        name: "Transaction Analytics",
+        icon: "💳",
+        key: "transaction-analytics",
+        description: "Comprehensive transaction analysis and trends",
+        href: "/transaction-analytics"
+      },
+      {
         name: "Customer Management",
         icon: "👥",
         key: "customer-management",
