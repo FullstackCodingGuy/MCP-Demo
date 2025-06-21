@@ -87,6 +87,32 @@ export const NAVIGATION_CONFIG: NavigationSection[] = [
         key: "api-documentation",
         description: "Interactive API documentation and testing",
         href: "/api-documentation"
+      },
+      {
+        name: "Documentation Hub",
+        icon: "📚",
+        key: "documentation",
+        description: "Complete documentation and guides",
+        href: "/documentation"
+      }
+    ]
+  },
+  {
+    title: "GETTING STARTED",
+    items: [
+      {
+        name: "Setup Guide",
+        icon: "🚀",
+        key: "setup",
+        description: "Complete setup and installation guide",
+        href: "/documentation/setup"
+      },
+      {
+        name: "Changelog",
+        icon: "📋",
+        key: "changelog",
+        description: "Version history and feature updates",
+        href: "/documentation/changelog"
       }
     ]
   }
