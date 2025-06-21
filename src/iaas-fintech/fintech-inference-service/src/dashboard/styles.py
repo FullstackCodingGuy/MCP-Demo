@@ -427,6 +427,57 @@ CORPORATE_THEME_CSS = """
         color: #475569;
     }
 
+    /* --- Custom Header --- */
+    .custom-header {
+        background: #ffffff;
+        padding: 1.5rem 2rem;
+        border-radius: 12px;
+        margin-bottom: 2rem;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e2e8f0;
+    }
+
+    .custom-header h1 {
+        border-bottom: none;
+        margin-bottom: 0.5rem;
+        font-size: 2rem;
+    }
+
+    .custom-header p {
+        font-size: 1rem;
+        color: #475569;
+        margin-bottom: 1rem;
+    }
+
+    .custom-header .breadcrumb {
+        margin-bottom: 0;
+    }
+
+    /* --- Code Blocks --- */
+    pre {
+        background-color: #f1f5f9 !important;
+        border-radius: 8px;
+        padding: 1rem !important;
+        font-family: 'monospace';
+        border: 1px solid #e2e8f0;
+        white-space: pre-wrap !important;
+        word-wrap: break-word !important;
+    }
+
+    code {
+        font-family: 'monospace';
+        color: #1e293b;
+        background-color: #eef2ff;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+    }
+
+    pre code {
+        background-color: transparent !important;
+        padding: 0;
+        border-radius: 0;
+    }
+
 </style>
 """
 
@@ -438,3 +489,7 @@ def get_navigation_css():
 def get_corporate_theme_css():
     """Get the corporate theme CSS styles"""
     return CORPORATE_THEME_CSS
+
+def get_modern_layout_css():
+    """Get the modern layout CSS styles"""
+    return MODERN_LAYOUT_CSS
