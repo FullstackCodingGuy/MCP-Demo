@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# FinTechBank Dashboard
+
+A modern, enterprise-grade dashboard built with Next.js for the Fintech Inference Service. This application provides comprehensive analytics, customer management, and AI-powered insights for financial services.
+
+## Features
+
+### 🏦 Core Analytics
+- **Executive Dashboard**: Key metrics, charts, and high-level insights
+- **Customer Analytics**: Deep dive into customer behavior patterns
+- **Customer Management**: Comprehensive customer profile management with search, filtering, and pagination
+
+### 🤖 AI & Machine Learning
+- **Churn Prediction**: ML-powered customer churn probability prediction
+- **Fraud Detection**: Real-time fraud detection and prevention
+- **Customer Segmentation**: Intelligent customer segmentation analysis
+- **Model Insights**: AI model performance and feature importance visualization
+
+### 🔧 Technical Tools
+- **Feature Engineering**: Data preprocessing and feature creation tools
+- **API Documentation**: Interactive API documentation with testing capabilities
+
+## Technology Stack
+
+- **Frontend**: Next.js 15 with TypeScript
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts
+- **Icons**: Lucide React
+- **UI Components**: Headless UI
+- **HTTP Client**: Axios
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
 
+### Installation
+
+1. Navigate to the project directory
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cd src/iaas-fintech/fintech-dashboard
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. Start the development server
+```bash
+npm run dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                    # Next.js App Router pages
+│   ├── overview/           # Executive dashboard
+│   ├── customer-management/ # Customer management interface
+│   ├── churn-prediction/   # ML churn prediction tools
+│   ├── feature-engineering/ # Feature engineering interface
+│   └── api-documentation/  # API docs and testing
+├── components/             # Reusable React components
+│   └── Navigation.tsx      # Main navigation component
+├── config/                 # Configuration files
+│   └── navigation.ts       # Navigation structure and routes
+├── lib/                    # Utility libraries
+│   ├── api.ts             # API client configuration
+│   └── utils.ts           # Helper functions and data generation
+└── types/                  # TypeScript type definitions
+    └── index.ts           # Interface definitions
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Available Scripts
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm run lint         # Run ESLint
+```
 
-## Deploy on Vercel
+## Key Features
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Navigation
+- Modern header-based navigation with dropdown menus
+- Responsive design with hover states
+- Active page highlighting
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Dashboard Pages
+- **Overview**: Executive metrics with charts and KPIs
+- **Customer Management**: Full CRUD interface with advanced filtering
+- **Churn Prediction**: Interactive ML prediction tools
+- **Feature Engineering**: Data pipeline visualization and management
+- **API Documentation**: Interactive API explorer
+
+### Data Visualization
+- Interactive charts using Recharts
+- Real-time data updates
+- Responsive chart layouts
+
+Built with ❤️ for enterprise financial services
